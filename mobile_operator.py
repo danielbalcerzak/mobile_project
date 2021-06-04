@@ -22,7 +22,7 @@ class MobileOperator:
         self.call_history = []
 
     def taking_action(self, item):
-        if item.from_who.operator.name == self.name:
+        if item.from_who.operator_name.name == self.name:
             if item.msg_type == "sms":
                 self.sms_history.append(item)
                 self.sms_sent_val += 1
@@ -32,7 +32,7 @@ class MobileOperator:
             else:
                 self.call_history.append(item)
                 self.callout_val += 1
-        if item.msg_recipient.operator.name == self.name:
+        if item.msg_recipient.operator_name.name == self.name:
             if item.msg_type == "sms":
                 self.sms_history.append(item)
                 self.sms_received_val += 1
@@ -43,15 +43,15 @@ class MobileOperator:
                 self.call_history.append(item)
                 self.callin_val += 1
         else:
-            item.msg_recipient.operator.taking_action(item)
+            item.msg_recipient.operator_name.taking_action(item)
             item.msg_recipient.geting_item(item)
 
     def get_info(self):
-        print("Nazwa: ", self.name)
+        print("Operator name: ", self.name)
         print("Prefix: ", self.prefix)
-        print("SMS wychodzace: ", self.sms_sent_val)
-        print("SMS przychodzace: ", self.sms_received_val)
-        print("MMS wychodzace: ", self.mms_sent_val)
-        print("MMS przychodzace: ", self.mms_received_val)
-        print("POLACZENIA wychodzace: ", self.callout_val)
-        print("POLACZENIA przychodzace: ", self.callin_val)
+        print("SMS sent: ", self.sms_sent_val)
+        print("SMS income: ", self.sms_received_val)
+        print("MMS sent: ", self.mms_sent_val)
+        print("MMS income: ", self.mms_received_val)
+        print("Call made: ", self.callout_val)
+        print("Call received: ", self.callin_val)

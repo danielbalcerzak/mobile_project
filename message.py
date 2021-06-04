@@ -17,7 +17,9 @@ class Message:
         self.msg_status = not self.msg_status
 
     def get_info(self):
-        print(f"From: {self.from_who}\nTo: {self.msg_recipient}\nDate and Time {self.data}, {self.godzina}")
+        print(f"From: {self.from_who}\n"
+              f"To: {self.msg_recipient}\n"
+              f"Date and Time: {self.msg_send_date}, {self.msg_send_time}")
 
 
 class Sms(Message):
@@ -42,4 +44,4 @@ class Call(Message):
     def __init__(self, sender, recipient):
         super().__init__(sender=sender, recipient=recipient)
         self.msg_type = "call"
-        self.action_of_the_recipient = None
+        self.react = None
