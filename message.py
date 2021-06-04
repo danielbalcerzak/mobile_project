@@ -1,5 +1,6 @@
 from datetime import datetime
 
+
 class Message:
 
     date = datetime.now()
@@ -29,11 +30,13 @@ class Sms(Message):
         super().get_info()
         print(f"Message: {self.tresc}")
 
+
 class Mms(Message):
     def __init__(self, od, do, kB):
         super().__init__(od=od, do=do)
         self.wielkosc = kB
         self.rodzaj = "mms"
+
 
 class Call(Message):
     def __init__(self, od, do):

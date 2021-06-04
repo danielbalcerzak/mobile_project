@@ -14,8 +14,10 @@ operator_dict = {"era": "+10",
                  "redbull": "+14"}
 users = []
 
+
 def making_operator_list():
     return [mobile_operator.MobileOperator(operator) for operator in operator_dict]
+
 
 def making_users_list(oper):
     cell_nums = []

@@ -1,5 +1,6 @@
 import depot
 
+
 class MobileOperator:
     def __init__(self, nazwa):
         self.nazwa = nazwa
@@ -24,7 +25,7 @@ class MobileOperator:
         if item.od.operator.nazwa == self.nazwa:
             if item.rodzaj == "sms":
                 self.historia_sms.append(item)
-                self.ilosc_sms_wychodzacych +=1
+                self.ilosc_sms_wychodzacych += 1
             elif item.rodzaj == "mms":
                 self.historia_mms.append(item)
                 self.ilosc_mms_wychodzacych += 1
@@ -34,7 +35,7 @@ class MobileOperator:
         if item.do.operator.nazwa == self.nazwa:
             if item.rodzaj == "sms":
                 self.historia_sms.append(item)
-                self.ilosc_sms_przychodzacych +=1
+                self.ilosc_sms_przychodzacych += 1
             elif item.rodzaj == "mms":
                 self.historia_mms.append(item)
                 self.ilosc_mms_przychodzacych += 1
@@ -47,10 +48,10 @@ class MobileOperator:
 
     def get_info(self):
         print("Nazwa: ", self.nazwa)
-        print("Prefix: ",self.prefix)
-        print("SMS wychodzace: ",self.ilosc_sms_wychodzacych)
-        print("SMS przychodzace: ",self.ilosc_sms_przychodzacych)
-        print("MMS wychodzace: ",self.ilosc_mms_wychodzacych)
-        print("MMS przychodzace: ",self.ilosc_mms_przychodzacych)
-        print("POLACZENIA wychodzace: ",self.ilosc_polaczen_wychodzacych)
-        print("POLACZENIA przychodzace: ",self.ilosc_polaczen_przychodzacych)
+        print("Prefix: ", self.prefix)
+        print("SMS wychodzace: ", self.ilosc_sms_wychodzacych)
+        print("SMS przychodzace: ", self.ilosc_sms_przychodzacych)
+        print("MMS wychodzace: ", self.ilosc_mms_wychodzacych)
+        print("MMS przychodzace: ", self.ilosc_mms_przychodzacych)
+        print("POLACZENIA wychodzace: ", self.ilosc_polaczen_wychodzacych)
+        print("POLACZENIA przychodzace: ", self.ilosc_polaczen_przychodzacych)
