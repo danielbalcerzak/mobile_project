@@ -4,8 +4,8 @@ import depot
 class MobileOperator:
     def __init__(self, nazwa):
         self.nazwa = nazwa
-        for operat in depot.operator_dict:
-            prefix = depot.operator_dict[operat]
+        for operat in depot.OPERATOR_DICT:
+            prefix = depot.OPERATOR_DICT[operat]
             if operat == self.nazwa:
                 self.prefix = prefix
                 break
