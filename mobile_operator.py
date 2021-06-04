@@ -2,6 +2,7 @@ import depot
 
 
 class MobileOperator:
+
     def __init__(self, name):
         self.name = name
         for operator in depot.OPERATOR_DICT:
@@ -20,6 +21,7 @@ class MobileOperator:
         self.sms_history = []
         self.mms_history = []
         self.call_history = []
+        self.queue_items = []
 
     def taking_action(self, item):
         if item.from_who.operator_name.name == self.name:
@@ -43,8 +45,8 @@ class MobileOperator:
                 self.call_history.append(item)
                 self.callin_val += 1
         else:
-            item.msg_recipient.operator_name.taking_action(item)
-            item.msg_recipient.geting_item(item)
+            self.queue_items.append(item)
+            # item.msg_recipient.geting_item(item)
 
     def get_info(self):
         print("Operator name: ", self.name)
@@ -55,3 +57,23 @@ class MobileOperator:
         print("MMS income: ", self.mms_received_val)
         print("Call made: ", self.callout_val)
         print("Call received: ", self.callin_val)
+
+    def get_list_of_items(self):
+        return self.queue_items
+
+    @staticmethod
+    def starting_process_in_queue(list_of_items):
+        while list_of_items:
+            for item in list_of_items:
+                if item.lifetime <= 0:
+                    list_of_items.remove(item)
+                    print(f"the {item.msg_type} "
+                          f"from {item.from_who.nr_tel} "
+                          f"to {item.msg_recipient.nr_tel} was not delivered")
+                else:
+                    if item.msg_recipient.getting_item(item) is False:
+                        item.lifetime -= 1
+
+                    else:
+                        item.msg_recipient.getting_item(item)
+                        list_of_items.remove(item)
