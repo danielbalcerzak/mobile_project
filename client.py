@@ -1,5 +1,4 @@
-import random
-
+from random import randint as rint
 from message import Sms, Mms, Call
 
 
@@ -35,8 +34,6 @@ class Client:
         print(f"Made calls:")
         print(f"\tanswer: "
               f"{len([call.action for call in self.historia_polaczen_wychodzace if call.action == 'answer'])}")
-        print(f"\tanswer: "
-              f"{len([call.action for call in self.historia_polaczen_wychodzace if call.action == 'answer'])}")
         print(f"\tmissed: "
               f"{len([call.action for call in self.historia_polaczen_wychodzace if call.action == 'missed'])}")
         print(f"\treject: "
@@ -70,10 +67,10 @@ class Client:
     @staticmethod
     def callin_action(item):
         if item.rodzaj == "call":
-            action = random.randint(1, 3)
+            action = rint(1, 3)
             if action == 1:
                 item.action = "answer"
-                time_of_calling = random.randint(1, 100000000)
+                time_of_calling = rint(1, 100000000)
                 item.wielkosc = time_of_calling
             elif action == 2:
                 item.action = "missed"
@@ -93,11 +90,7 @@ class Client:
             if self.checking_memory(self.max_liczba_sms, self.historia_sms_wychodzace + self.historia_sms_przychodzace):
                 self.historia_sms_przychodzace.append(item)
         elif item.rodzaj == "mms":
-            memory = 0
-            for mms in self.historia_mms_przychodzace:
-                memory += mms.wielkosc
-                if self.checking_memory(self.max_pamiec_mms,
-                                        self.historia_mms_wychodzace + self.historia_mms_przychodzace):
-                    self.historia_mms_przychodzace.append(item)
+            if self.checking_memory(self.max_pamiec_mms, self.historia_mms_wychodzace + self.historia_mms_przychodzace):
+                self.historia_mms_przychodzace.append(item)
         else:
             self.historia_polaczen_przychodzace.append(item)
