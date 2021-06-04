@@ -4,7 +4,7 @@ from random import randint as rint
 from random import choice
 
 
-NUM_OF_USERS = 100
+NUM_OF_USERS = 1000
 MIN_ITEM = 10
 MAX_ITEM = 200
 FIRST_NUM = 100000000
