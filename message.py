@@ -5,41 +5,41 @@ class Message:
 
     date = datetime.now()
 
-    def __init__(self, od, do):
-        self.od = od
-        self.do = do
-        self.data = self.date.date()
-        self.godzina = self.date.time()
-        self.wielkosc = 1
-        self.status = False
+    def __init__(self, sender, recipient):
+        self.from_who = sender
+        self.msg_recipient = recipient
+        self.msg_send_date = self.date.date()
+        self.msg_send_time = self.date.time()
+        self.msg_size = 1
+        self.msg_status = False
 
     def change_status(self):
-        self.status = not self.status
+        self.msg_status = not self.msg_status
 
     def get_info(self):
-        print(f"From: {self.od}\nTo: {self.do}\nDate and Time {self.data}, {self.godzina}")
+        print(f"From: {self.from_who}\nTo: {self.msg_recipient}\nDate and Time {self.data}, {self.godzina}")
 
 
 class Sms(Message):
-    def __init__(self, od, do, tresc):
-        super().__init__(od=od, do=do)
-        self.tresc = tresc
-        self.rodzaj = "sms"
+    def __init__(self, sender, recipient, text):
+        super().__init__(sender=sender, recipient=recipient)
+        self.msg_text = text
+        self.msg_type = "sms"
 
     def get_info(self):
         super().get_info()
-        print(f"Message: {self.tresc}")
+        print(f"Message: {self.msg_text}")
 
 
 class Mms(Message):
-    def __init__(self, od, do, kB):
-        super().__init__(od=od, do=do)
-        self.wielkosc = kB
-        self.rodzaj = "mms"
+    def __init__(self, sender, recipient, kB):
+        super().__init__(sender=sender, recipient=recipient)
+        self.msg_size = kB
+        self.msg_type = "mms"
 
 
 class Call(Message):
-    def __init__(self, od, do):
-        super().__init__(od=od, do=do)
-        self.rodzaj = "call"
-        self.action = None
+    def __init__(self, sender, recipient):
+        super().__init__(sender=sender, recipient=recipient)
+        self.msg_type = "call"
+        self.action_of_the_recipient = None
