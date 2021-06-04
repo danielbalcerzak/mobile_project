@@ -36,7 +36,7 @@ class Mms(Message):
         self.rodzaj = "mms"
 
 class Call(Message):
-    def __init__(self, od, do, action):
+    def __init__(self, od, do):
         super().__init__(od=od, do=do)
         self.rodzaj = "call"
-        self.action = action
+        self.action = None

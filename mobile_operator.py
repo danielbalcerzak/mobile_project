@@ -1,9 +1,10 @@
+import depot
+
 class MobileOperator:
-    operator_dict = {"plus": "+12", "play": "+13"}
-    def __init__(self, nazwa, ):
+    def __init__(self, nazwa):
         self.nazwa = nazwa
-        for operat in self.operator_dict:
-            prefix = self.operator_dict[operat]
+        for operat in depot.operator_dict:
+            prefix = depot.operator_dict[operat]
             if operat == self.nazwa:
                 self.prefix = prefix
                 break
@@ -19,7 +20,7 @@ class MobileOperator:
         self.historia_mms = []
         self.historia_polaczen = []
 
-    def save_and_push(self, item):
+    def taking_action(self, item):
         if item.od.operator.nazwa == self.nazwa:
             if item.rodzaj == "sms":
                 self.historia_sms.append(item)
@@ -41,7 +42,8 @@ class MobileOperator:
                 self.historia_polaczen.append(item)
                 self.ilosc_polaczen_przychodzacych += 1
         else:
-            item.do.operator.save_and_push(item)
+            item.do.operator.taking_action(item)
+            item.do.geting_item(item)
 
     def get_info(self):
         print("Nazwa: ", self.nazwa)
