@@ -6,10 +6,10 @@ END_CALL_SEC = 20
 
 
 class Client:
-    def __init__(self, nr_tel, operator_name, max_sms, max_mms):
-        self.operator_name = operator_name
+    def __init__(self, nr_tel, operator, max_sms, max_mms):
+        self.operator = operator
         self.short_nr_tel = str(nr_tel)
-        self.nr_tel = self.operator_name.prefix + self.short_nr_tel
+        self.nr_tel = self.operator.prefix + self.short_nr_tel
         self.max_sms = max_sms
         self.max_mms_memo = max_mms
         self.sms_income_history = []
@@ -21,8 +21,8 @@ class Client:
 
     def get_info(self):
         print(f"Phone number: {self.nr_tel}")
-        print(f"Operator: {self.operator_name.name}")
-        print(f"Prefix: {self.operator_name.prefix}")
+        print(f"Operator: {self.operator.name}")
+        print(f"Prefix: {self.operator.prefix}")
         print(f"Short phone number: {self.short_nr_tel}")
         print(f"Memory for sms: {len(self.sms_received_history) + len(self.sms_income_history)} / {self.max_sms}")
         print(f"\tsms sent: {len(self.sms_received_history)}")
@@ -44,18 +44,18 @@ class Client:
         sms = Sms(self, client, text)
         if self.checking_memory(self.max_sms, self.sms_received_history + self.sms_income_history):
             self.sms_received_history.append(sms)
-        self.operator_name.taking_action(sms)
+        self.operator.taking_action(sms)
 
     def send_mms(self, to, mms_size):
         mms = Mms(self, to, mms_size)
         if self.checking_memory(self.max_mms_memo, self.mms_received_history + self.mms_income_history):
             self.mms_received_history.append(mms)
-        self.operator_name.taking_action(mms)
+        self.operator.taking_action(mms)
 
     def calling(self, To):
         call = Call(self, To)
         self.call_received_history.append(call)
-        self.operator_name.taking_action(call)
+        self.operator.taking_action(call)
 
     @staticmethod
     def callin_action(item):
