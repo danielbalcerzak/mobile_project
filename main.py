@@ -1,24 +1,25 @@
-import depot
-import random
+import depot as dp
+from random import randint as rint
+from random import choice
+
+NUM_OF_ACTIONS = 300
+MIN_KB = 1
+MAX_KB = 6
 
 
 def main():
-    ac_val = 10000
-    operator_list = depot.making_operator_list()
-    users_list = depot.making_users_list(operator_list)
-
-    for val in range(ac_val):
+    operator_list = dp.making_operator_list()
+    users_list = dp.making_users_list(operator_list)
+    txt = dp.sms_text("text.txt")
+    for i in range(NUM_OF_ACTIONS):
         for user in users_list:
-            action = random.randint(1, 3)
+            action = rint(1, 3)
             if action == 1:
-                user.send_sms(random.choice(users_list), "d")
+                user.send_sms(choice(users_list), txt)
             elif action == 2:
-                user.send_mms(random.choice(users_list), 22)
+                user.send_mms(choice(users_list), rint(MIN_KB, MAX_KB))
             elif action == 3:
-                user.calling(random.choice(users_list))
-
-    users_list[0].get_info()
-    users_list[3].get_info()
+                user.calling(choice(users_list))
 
 
 if __name__ == '__main__':
