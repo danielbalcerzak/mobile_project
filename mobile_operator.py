@@ -24,7 +24,7 @@ class MobileOperator:
         self.queue_items = []
 
     def taking_action(self, item):
-        if item.from_who.operator_name.name == self.name:
+        if item.from_who.operator.name == self.name:
             if item.msg_type == "sms":
                 self.sms_history.append(item)
                 self.sms_sent_val += 1
@@ -34,7 +34,7 @@ class MobileOperator:
             else:
                 self.call_history.append(item)
                 self.callout_val += 1
-        if item.msg_recipient.operator_name.name == self.name:
+        if item.msg_recipient.operator.name == self.name:
             if item.msg_type == "sms":
                 self.sms_history.append(item)
                 self.sms_received_val += 1
@@ -46,7 +46,6 @@ class MobileOperator:
                 self.callin_val += 1
         else:
             self.queue_items.append(item)
-            # item.msg_recipient.geting_item(item)
 
     def get_info(self):
         print("Operator name: ", self.name)
@@ -62,14 +61,18 @@ class MobileOperator:
         return self.queue_items
 
     @staticmethod
+    def show_not_delivered(item):
+        print(f"the {item.msg_type} "
+              f"from {item.from_who.nr_tel} "
+              f"to {item.msg_recipient.nr_tel} was not delivered")
+
+    @staticmethod
     def starting_process_in_queue(list_of_items):
         while list_of_items:
             for item in list_of_items:
                 if item.lifetime <= 0:
                     list_of_items.remove(item)
-                    print(f"the {item.msg_type} "
-                          f"from {item.from_who.nr_tel} "
-                          f"to {item.msg_recipient.nr_tel} was not delivered")
+                    item.from_who.operator.show_not_delivered(item)
                 else:
                     if item.msg_recipient.getting_item(item) is False:
                         item.lifetime -= 1
