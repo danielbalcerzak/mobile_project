@@ -24,14 +24,10 @@ class Client:
         print(f"Operator: {self.operator_name.name}")
         print(f"Prefix: {self.operator_name.prefix}")
         print(f"Short phone number: {self.short_nr_tel}")
-        print(
-            f"Memory for sms: {len(self.sms_received_history) + len(self.sms_income_history)} / "
-            f"{self.max_sms}")
+        print(f"Memory for sms: {len(self.sms_received_history) + len(self.sms_income_history)} / {self.max_sms}")
         print(f"\tsms sent: {len(self.sms_received_history)}")
         print(f"\tsms received: {len(self.sms_income_history)}")
-        print(
-            f"Memory for mms: {len(self.mms_received_history) + len(self.mms_income_history)} /"
-            f" {self.max_mms_memo}")
+        print(f"Memory for mms: {len(self.mms_received_history) + len(self.mms_income_history)} / {self.max_mms_memo}")
         print(f"\tmms sent: {len(self.mms_received_history)}")
         print(f"\tmms received: {len(self.mms_income_history)}")
         print(f"Made calls:")
@@ -81,13 +77,17 @@ class Client:
         else:
             return False
 
-    def geting_item(self, item):
+    def getting_item(self, item):
         self.callin_action(item)
         if item.msg_type == "sms":
             if self.checking_memory(self.max_sms, self.sms_received_history + self.sms_income_history):
                 self.sms_income_history.append(item)
+            else:
+                return False
         elif item.msg_type == "mms":
             if self.checking_memory(self.max_mms_memo, self.mms_received_history + self.mms_income_history):
                 self.mms_income_history.append(item)
+            else:
+                return False
         else:
             self.call_income_history.append(item)
