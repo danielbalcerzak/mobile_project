@@ -1,6 +1,9 @@
 from random import randint as rint
 from message import Sms, Mms, Call
 
+START_CALL_SEC = 1
+END_CALL_SEC = 20
+
 
 class Client:
     def __init__(self, nr_tel, oper, max_sms, max_mms):
@@ -18,7 +21,7 @@ class Client:
 
     def get_info(self):
         print(f"Phone number: {self.nr_tel}")
-        print(f"Operator: {self.operator.nazwa}")
+        print(f"Operator: {self.operator.name}")
         print(f"Prefix: {self.operator.prefix}")
         print(f"Short phone number: {self.short_nr_tel}")
         print(
@@ -33,18 +36,18 @@ class Client:
         print(f"\tmms received: {len(self.historia_mms_przychodzace)}")
         print(f"Made calls:")
         print(f"\tanswer: "
-              f"{len([call.action for call in self.historia_polaczen_wychodzace if call.action == 'answer'])}")
+              f"{len([call.action_of_the_recipient for call in self.historia_polaczen_wychodzace if call.action_of_the_recipient == 'answer'])}")
         print(f"\tmissed: "
-              f"{len([call.action for call in self.historia_polaczen_wychodzace if call.action == 'missed'])}")
+              f"{len([call.action_of_the_recipient for call in self.historia_polaczen_wychodzace if call.action_of_the_recipient == 'missed'])}")
         print(f"\treject: "
-              f"{len([call.action for call in self.historia_polaczen_wychodzace if call.action == 'reject'])}")
+              f"{len([call.action_of_the_recipient for call in self.historia_polaczen_wychodzace if call.action_of_the_recipient == 'reject'])}")
         print(f"Income calls:")
         print(f"\tanswer: "
-              f"{len([call.action for call in self.historia_polaczen_przychodzace if call.action == 'answer'])}")
+              f"{len([call.action_of_the_recipient for call in self.historia_polaczen_przychodzace if call.action_of_the_recipient == 'answer'])}")
         print(f"\tmissed: "
-              f"{len([call.action for call in self.historia_polaczen_przychodzace if call.action == 'missed'])}")
+              f"{len([call.action_of_the_recipient for call in self.historia_polaczen_przychodzace if call.action_of_the_recipient == 'missed'])}")
         print(f"\treject: "
-              f"{len([call.action for call in self.historia_polaczen_przychodzace if call.action == 'reject'])}")
+              f"{len([call.action_of_the_recipient for call in self.historia_polaczen_przychodzace if call.action_of_the_recipient == 'reject'])}")
         print(f"-" * 30)
 
     def send_sms(self, client, text):
@@ -66,16 +69,16 @@ class Client:
 
     @staticmethod
     def callin_action(item):
-        if item.rodzaj == "call":
+        if item.msg_type == "call":
             action = rint(1, 3)
             if action == 1:
-                item.action = "answer"
-                time_of_calling = rint(1, 100000000)
-                item.wielkosc = time_of_calling
+                item.action_of_the_recipient = "answer"
+                time_of_calling = rint(START_CALL_SEC, END_CALL_SEC)
+                item.msg_size = time_of_calling
             elif action == 2:
-                item.action = "missed"
+                item.action_of_the_recipient = "missed"
             elif action == 3:
-                item.action = "reject"
+                item.action_of_the_recipient = "reject"
 
     @staticmethod
     def checking_memory(max_memory, memory):
@@ -86,10 +89,10 @@ class Client:
 
     def geting_item(self, item):
         self.callin_action(item)
-        if item.rodzaj == "sms":
+        if item.msg_type == "sms":
             if self.checking_memory(self.max_liczba_sms, self.historia_sms_wychodzace + self.historia_sms_przychodzace):
                 self.historia_sms_przychodzace.append(item)
-        elif item.rodzaj == "mms":
+        elif item.msg_type == "mms":
             if self.checking_memory(self.max_pamiec_mms, self.historia_mms_wychodzace + self.historia_mms_przychodzace):
                 self.historia_mms_przychodzace.append(item)
         else:
