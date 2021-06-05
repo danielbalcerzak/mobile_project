@@ -1,8 +1,6 @@
 from random import randint as rint
 from message import Sms, Mms, Call
-
-START_CALL_SEC = 1
-END_CALL_SEC = 20
+import depot as dp
 
 
 class Client:
@@ -63,7 +61,7 @@ class Client:
             action = rint(1, 3)
             if action == 1:
                 item.react = "answer"
-                time_of_calling = rint(START_CALL_SEC, END_CALL_SEC)
+                time_of_calling = rint(dp.START_CALL_SEC, dp.END_CALL_SEC)
                 item.msg_size = time_of_calling
             elif action == 2:
                 item.react = "missed"
