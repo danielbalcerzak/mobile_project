@@ -1,12 +1,11 @@
-import depot
-
+import depot as dp
 
 class MobileOperator:
 
     def __init__(self, name):
         self.name = name
-        for operator in depot.OPERATOR_DICT:
-            prefix = depot.OPERATOR_DICT[operator]
+        for operator in dp.OPERATOR_DICT:
+            prefix = dp.OPERATOR_DICT[operator]
             if operator == self.name:
                 self.prefix = prefix
                 break
@@ -63,20 +62,20 @@ class MobileOperator:
     @staticmethod
     def show_not_delivered(item):
         print(f"the {item.msg_type} "
-              f"from {item.from_who.nr_tel} "
-              f"to {item.msg_recipient.nr_tel} was not delivered")
+              f"from {item.from_who.nr_tel} ({item.from_who.operator.name}) "
+              f"to {item.msg_recipient.nr_tel} ({item.msg_recipient.operator.name}) was not delivered")
 
     @staticmethod
-    def starting_process_in_queue(list_of_items):
+    def starting_process_in_queue(self, list_of_items, operator):
         while list_of_items:
             for item in list_of_items:
                 if item.lifetime <= 0:
                     list_of_items.remove(item)
-                    item.from_who.operator.show_not_delivered(item)
+                    # item.from_who.operator.show_not_delivered(item)
                 else:
                     if item.msg_recipient.getting_item(item) is False:
                         item.lifetime -= 1
-
                     else:
                         item.msg_recipient.getting_item(item)
+                        dp.get_exception(None, AttributeError, dp.save_data_delivered, item, operator)
                         list_of_items.remove(item)
