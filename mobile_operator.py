@@ -66,7 +66,7 @@ class MobileOperator:
               f"to {item.msg_recipient.nr_tel} ({item.msg_recipient.operator.name}) was not delivered")
 
     @staticmethod
-    def starting_process_in_queue(self, list_of_items, operator):
+    def starting_process_in_queue(list_of_items, operator):
         while list_of_items:
             for item in list_of_items:
                 if item.lifetime <= 0:
