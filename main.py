@@ -7,8 +7,6 @@ def main():
     start_send_and_call(users_list)
     start_operators_action(operator_list)
 
-    users_list[0].get_info()
-
 
 if __name__ == '__main__':
     main()
