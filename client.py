@@ -127,3 +127,4 @@ class Client:
                     else:
                         csvfile.write(str(info))
                         csvfile.write(",")
+
