@@ -12,6 +12,8 @@ class Message:
         self.msg_send_time = self.date.time()
         self.msg_size = 1
         self.msg_status = False
+        self.lifetime = 3
+        self.msg_text = None
 
     def change_status(self):
         self.msg_status = not self.msg_status
@@ -45,3 +47,4 @@ class Call(Message):
         super().__init__(sender=sender, recipient=recipient)
         self.msg_type = "call"
         self.react = None
+        self.lifetime = 1
